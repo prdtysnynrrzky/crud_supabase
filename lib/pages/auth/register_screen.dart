@@ -16,7 +16,7 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final phoneController = TextEditingController();
+  final usernameController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
 
@@ -32,8 +32,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
           password: passwordController.text.trim(),
         );
 
+        final userId = Supabase.instance.client.auth.currentUser?.id;
+        if (userId == null) return;
+
+        await Supabase.instance.client.from('profiles').insert({
+          'username': usernameController.text.trim(),
+          'email': emailController.text.trim(),
+          'id': userId,
+        });
+
         if (response.user != null) {
           if (!mounted) return;
+
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -91,6 +101,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: TextFormField(
+                        controller: usernameController,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Username',
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Username harus diisi';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade100,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: TextFormField(
                         controller: emailController,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
@@ -127,24 +161,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           }
                           return null;
                         },
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 24, vertical: 6),
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade100,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: TextFormField(
-                        controller: phoneController,
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'No Hp',
-                        ),
                       ),
                     ),
                   ),

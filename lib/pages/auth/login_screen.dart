@@ -1,4 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
+
 import 'package:crud_supabase/main.dart';
 import 'package:crud_supabase/pages/auth/register_screen.dart';
 import 'package:crud_supabase/pages/home/home_screen.dart';
@@ -41,12 +42,16 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Gagal login. Silakan coba lagi.')),
+            const SnackBar(
+              content: Text('Gagal login. Silakan coba lagi.'),
+            ),
           );
         }
       } on AuthException catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Gagal login: ${e.message}')),
+          SnackBar(
+            content: Text('Gagal login: ${e.message}'),
+          ),
         );
       } finally {
         setState(() {
@@ -135,16 +140,23 @@ class _LoginScreenState extends State<LoginScreen> {
                     onTap: _isLoading ? null : signIn,
                     child: Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 24,
+                        horizontal: 80,
                         vertical: 12,
                       ),
                       decoration: BoxDecoration(
-                        color: _isLoading ? Colors.grey : Colors.black,
+                        color: _isLoading ? Colors.black : Colors.black,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: _isLoading
-                          ? const CircularProgressIndicator(
-                              color: Colors.white,
+                          ? const SizedBox(
+                              height: 30,
+                              width: 30,
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.white),
+                                ),
+                              ),
                             )
                           : const Text(
                               'Masuk',

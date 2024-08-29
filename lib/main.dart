@@ -1,6 +1,7 @@
 import 'package:crud_supabase/pages/auth/login_screen.dart';
 import 'package:crud_supabase/pages/auth/register_screen.dart';
 import 'package:crud_supabase/pages/home/home_screen.dart';
+import 'package:crud_supabase/pages/profile/profile_screen.dart';
 import 'package:crud_supabase/pages/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         LoginScreen.routeName: (context) => const LoginScreen(),
         RegisterScreen.routeName: (context) => const RegisterScreen(),
         HomeScreen.routeName: (context) => const HomeScreen(),
+        ProfileScreen.routeName: (context) => const ProfileScreen(),
       },
     );
   }

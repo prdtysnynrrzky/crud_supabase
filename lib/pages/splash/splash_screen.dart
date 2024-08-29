@@ -1,8 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
-import 'package:crud_supabase/pages/home/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:crud_supabase/main.dart';
+import 'package:crud_supabase/pages/home/home_screen.dart';
 import 'package:crud_supabase/pages/auth/login_screen.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SplashScreen extends StatefulWidget {
   static const routeName = '/splash-screen';
@@ -16,7 +16,6 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _redirect() async {
     await Future.delayed(const Duration(seconds: 3));
 
-    final supabase = Supabase.instance.client;
     final session = supabase.auth.currentSession;
 
     if (session != null) {
